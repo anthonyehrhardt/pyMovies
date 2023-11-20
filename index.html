@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cfMovie App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <form method="post" action="{{ url_for('search') }}">
+            <input
+                type="text"
+                name="search"
+                placeholder="Search"
+                class="search"
+            />
+            <button type="submit">Search</button>
+        </form>
+    </header>
+    <main id="main">
+        {% for movie in movies %}
+            <div class="movie">
+                <img
+                    src="{{ url_for('static', filename='w1280') + movie.poster_path }}"
+                    alt="{{ movie.title }}"
+                />
+                <div class="movie-info">
+                    <h3>{{ movie.title }}</h3>
+                    <span class="{{ get_class_by_rate(movie.vote_average) }}">{{ movie.vote_average }}</span>
+                </div>
+                <div class="overview">
+                    <h3>Overview:</h3>
+                    {{ movie.overview }}
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>
